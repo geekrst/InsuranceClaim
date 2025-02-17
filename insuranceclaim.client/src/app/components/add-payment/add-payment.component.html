@@ -1,0 +1,41 @@
+<!--<p>add-payment works!</p>-->
+
+
+<div class="container">
+  <form #form="ngForm" (ngSubmit)="addPayment()">
+    <div class="col">
+
+      <div class="col-md-3 mb-3">
+        <label for="reserveDamage" class="stayLeft">Damage</label>
+        <input type="text" class="form-control border-primary" id="reserveDamage" placeholder="Enter Damage Cost"
+               [(ngModel)]="addPaymentRequest.paymentDamage" name="reserveDamage" />
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="reserveClaimantCost" class="stayLeft">Claimant Cost</label>
+        <input type="text" class="form-control border-primary" id="reserveClaimantCost" placeholder="Enter Claimant Cost"
+               [(ngModel)]="addPaymentRequest.paymentClaimantCost" name="reserveClaimantCost" />
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="reserveDefenceCost" class="stayLeft">Defence Cost</label>
+        <input type="text" class="form-control border-primary" id="reserveDefenceCost" placeholder="Enter Defence Cost"
+               [(ngModel)]="addPaymentRequest.paymentDefenceCost" name="reserveDefenceCost" />
+
+      </div>
+      <div class="col-md-3">
+        <button type="submit" class="mt-4 btn btn-primary textLeft">
+          Add Payment
+        </button>
+      </div>
+
+      <div class="col-md-3 mt-5" *ngIf="noReserve">
+        <strong>No reserves found to associate the payment.</strong>
+      </div>
+
+    </div>
+  </form>
+
+</div>
+

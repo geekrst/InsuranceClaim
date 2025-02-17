@@ -7,5 +7,7 @@ namespace InsuranceClaim.Server.Data
     {
         public InsuranceClaimDBContext(DbContextOptions options) : base(options) { }
         public DbSet<ReserveModel> ReserveModel { get; set; }
+        public DbSet<PaymentModel> PaymentModel { get; set; }
+
     }
 }

@@ -1,0 +1,43 @@
+
+<button class="nav-item btn btn-primary">
+  <a class="nav-link"
+     routerLink="/insurance/reserve/add"
+     routerLinkActive="clicked homeLink">Add A Reserve</a>
+</button>
+
+<div class="container">
+  <table class="table table-lg table-bordered">
+    <tr>
+      <th>ID</th>
+      <th>Reserve damage Cost</th>
+      <th>Reserve Claimant Cost</th>
+      <th>Reserve Defence Cost</th>
+      <!--<th>Paid damage Cost</th>
+      <th>Paid Claimant Cost</th>
+      <th>Paid Defence Cost</th>
+      <th>Incurred damage</th>
+      <th>Incurred Claimant Cost</th>
+      <th>Incurred Defence Cost</th>-->
+      <th>Status</th>
+      <th>Status Update Date</th>
+      <th>Take Action</th>
+    </tr>
+    <tbody>
+      <tr *ngFor="let reserve of myReserves">
+        <td>{{reserve.id}}</td>
+        <td>{{reserve.reserveDamage}}</td>
+        <td>{{reserve.reserveClaimantCost}}</td>
+        <td>{{reserve.reserveDefenceCost}}</td>
+        <td>{{reserve.status}}</td>
+        <td>{{reserve.statusDate}}</td>
+        <td>
+          <button class="btn btn-success mx-2 my-2" routerLink="/insurance/reserve/edit">Edit</button>
+          <button class="btn btn-success mx-2 my-2" (click)="onSendApprovalReserve()">Send For Approval</button>
+          <button class="btn btn-danger mx-2 my-2" (click)="onRejectReserve()">Reject</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+

@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+.textLeft {
+  text-align: left;
+}
+
+.stayLeft {
+  display: flex;
+  align-content: flex-start
+}
+
+.clicked {
+  background-color: lightblue;
+  color: darkcyan;
+}
+
+.homeLink {
+  font-weight: bold;
+  padding: 10px;
+  border-radius: 10px;
+}
