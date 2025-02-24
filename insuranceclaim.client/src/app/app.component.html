@@ -1,7 +1,7 @@
 
 <nav class="mb-4 navbar navbar-expand bg-light">
   <div class="container">
-    <a class="navbar-brand" ><h1>Insurance Claim</h1></a>
+    <a class="nav-link" routerLink="insurance" ><h1>Insurance Claim</h1></a>
     <ul class="navbar-nav">
       <li class="nav-item">
         <a class="nav-link"
@@ -13,7 +13,17 @@
            routerLink="insurance/payment"
            routerLinkActive="clicked homeLink">Payment</a>
       </li>
-     
+      <li class="nav-item">
+        <a class="nav-link"
+           routerLink="insurance/approvals"
+           routerLinkActive="clicked homeLink">Approved Entities</a>
+      </li>
+    
+      <li class="nav-item">
+        <a class="nav-link"
+           routerLink="insurance/finalReserves"
+           routerLinkActive="clicked homeLink">Final Reserves</a>
+      </li>
     </ul>
   </div>
 </nav> 

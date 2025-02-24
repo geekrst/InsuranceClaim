@@ -4,6 +4,7 @@ using InsuranceClaim.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InsuranceClaim.Server.Migrations
 {
     [DbContext(typeof(InsuranceClaimDBContext))]
-    partial class InsuranceClaimDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250219125354_added isInApproved column to models")]
+    partial class addedisInApprovedcolumntomodels
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -28,9 +31,6 @@ namespace InsuranceClaim.Server.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("IsInApproval")
-                        .HasColumnType("bit");
-
                     b.Property<long>("PaymentClaimantCost")
                         .HasColumnType("bigint");
 
@@ -40,16 +40,15 @@ namespace InsuranceClaim.Server.Migrations
                     b.Property<long>("PaymentDefenceCost")
                         .HasColumnType("bigint");
 
-                    b.Property<string>("PaymentType")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StatusDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("isInApproved")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -70,12 +69,6 @@ namespace InsuranceClaim.Server.Migrations
 
                     b.Property<long>("IncurredDefenceCost")
                         .HasColumnType("bigint");
-
-                    b.Property<bool>("IsInApproval")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("IsOverRidden")
-                        .HasColumnType("bit");
 
                     b.Property<long>("PaidClaimantCost")
                         .HasColumnType("bigint");
@@ -101,6 +94,9 @@ namespace InsuranceClaim.Server.Migrations
 
                     b.Property<DateTime>("StatusDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("isInApproved")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

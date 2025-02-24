@@ -4,6 +4,7 @@ using InsuranceClaim.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InsuranceClaim.Server.Migrations
 {
     [DbContext(typeof(InsuranceClaimDBContext))]
-    partial class InsuranceClaimDBContextModelSnapshot : ModelSnapshot
+    [Migration("20250221062406_added IsOverRidden to Reserve Model")]
+    partial class addedIsOverRiddentoReserveModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -14,12 +14,13 @@ export class AddPaymentComponent {
   constructor(private myService: PaymentServiceService, private routTo: Router) { }
 
   addPaymentRequest: IPaymentRequestModel = {
-    id: '00000000-0000-0000-0000-000000000000',
-    paymentDamage: BigInt(0),
-    paymentClaimantCost: BigInt(0),
-    paymentDefenceCost: BigInt(0),
-    status: 'NEW',
-    statusDate: new Date('0000-00-00T00:00:00')
+      id: '00000000-0000-0000-0000-000000000000',
+      paymentDamage: BigInt(0),
+      paymentClaimantCost: BigInt(0),
+      paymentDefenceCost: BigInt(0),
+      status: 'NEW',
+      statusDate: new Date('0000-00-00T00:00:00'),
+      paymentType: ''
   }
  
   

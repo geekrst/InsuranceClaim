@@ -9,7 +9,7 @@
     <tr>
       <th>ID</th>
       <th>Payment damage Cost</th>
-      <th>Payment Claimant Cost</th>  
+      <th>Payment Claimant Cost</th>
       <th>Payment Defence Cost</th>
       <!--<th>Paid damage Cost</th>
       <th>Paid Claimant Cost</th>
@@ -17,9 +17,10 @@
       <th>Incurred damage</th>
       <th>Incurred Claimant Cost</th>
       <th>Incurred Defence Cost</th>-->
+      <th>Payment type</th>
       <th>Status</th>
       <th>Status Update Date</th>
-      <th>Take Action</th>  
+      <th>Take Action</th>
     </tr>
     <tbody>
       <tr *ngFor="let payment of myPayments">
@@ -27,13 +28,22 @@
         <td>{{payment.paymentDamage}}</td>
         <td>{{payment.paymentClaimantCost}}</td>
         <td>{{payment.paymentDefenceCost}}</td>
+        <td>{{payment.paymentType}}</td>
         <td>{{payment.status}}</td>
         <td>{{payment.statusDate}}</td>
         <td>
-          <button class="btn btn-success mx-2">Approve</button>
-          <button class="btn btn-danger mx-2">Reject</button>
+          <button class="btn btn-success mx-2 my-2" [routerLink]="['/insurance/payment','edit',payment.id]" [hidden]="payment.isInApproval">Edit</button>
+          <button class="btn btn-success mx-2 my-2" (click)="onSendApprovalPayment(payment)" [hidden]="payment.isInApproval">Send For Approval</button>
+          <button class="btn btn-success my-2" (click)="onApprovingPayment(payment)" [disabled]="payment.status=='Approved' || payment.status=='Rejected'" [hidden]="!payment.isInApproval">Approve</button>
+          <button class="btn btn-warning" (click)="onRejectingPayment(payment)" [disabled]="payment.status=='Approved' || payment.status=='Rejected'" [hidden]="!payment.isInApproval">Reject</button>
         </td>
       </tr>
     </tbody>
   </table>
+
+  <div class="col-md-3 mt-5" *ngIf="noApprovedReserve">
+    <strong>Can't send for Approval... since, there is no Approved Reserve !!...</strong>
+  </div>
+
+
 </div>

@@ -5,6 +5,7 @@ export interface IPaymentRequestModel {
   paymentDefenceCost: bigint,
   status: string,
   statusDate: Date,
+  paymentType: string
 }
 
 
@@ -13,6 +14,9 @@ export interface IPaymentModel {
   paymentDamage: bigint,
   paymentClaimantCost: bigint,
   paymentDefenceCost: bigint,
+  isInApproval: boolean,
   status: string,
   statusDate: Date,
+  paymentType: string
+
 }

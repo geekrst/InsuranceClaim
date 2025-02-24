@@ -16,15 +16,27 @@ export class ReserveServiceService {
     return this.http.get<IReserveModel[]>(this.baseApiUrl + '/Reserves');
   }
 
+  getAllReservesForApproval(): Observable<IReserveModel[]> {
+    return this.http.get<IReserveModel[]>(this.baseApiUrl + '/Reserves/Approvals');
+  }
+
+  getApprovedReserves(): Observable<IReserveModel[]> {
+    return this.http.get<IReserveModel[]>(this.baseApiUrl + '/Reserves/Approved')
+  }
+
+  getFinalReserves(): Observable<IReserveModel[]> {
+    return this.http.get<IReserveModel[]>(this.baseApiUrl + '/CalculatedReservesWithPayments');
+  }
+
   addReserve(addReserveRequest: IReserveRequestModel): Observable<IReserveModel> {
     return this.http.post<IReserveModel>(this.baseApiUrl+'/Reserve/add',addReserveRequest)
   }
 
   getReserve(id: string): Observable<IReserveModel> {
-    return this.http.get<IReserveModel>(this.baseApiUrl+'/Reserve' + id)
+    return this.http.get<IReserveModel>(this.baseApiUrl+'/Reserve/' + id)
   }
 
   updateReserve(updateReserveRequest: IReserveModel): Observable<IReserveModel> {
-    return this.http.put<IReserveModel>(this.baseApiUrl + '/Reserve/Update/' + updateReserveRequest.id, updateReserveRequest);
+    return this.http.put<IReserveModel>(this.baseApiUrl + '/Reserve/edit/' + updateReserveRequest.id, updateReserveRequest);
   }
 }

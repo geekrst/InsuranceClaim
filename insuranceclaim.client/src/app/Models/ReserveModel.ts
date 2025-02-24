@@ -19,6 +19,8 @@ export interface IReserveModel {
   incurredDamage: bigint,
   incurredClaimantCost: bigint,
   incurredDefenceCost: bigint,
+  isInApproval: boolean,
+  isOverRidden:boolean,
   status: string,
   statusDate: Date,
 }

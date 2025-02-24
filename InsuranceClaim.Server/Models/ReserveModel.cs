@@ -12,8 +12,12 @@
         public long IncurredDamage { get; set; }
         public long IncurredClaimantCost { get; set; }
         public long IncurredDefenceCost { get; set; }
+
+        public Boolean IsInApproval { get; set; }
         public string Status { get; set; }
         public DateTime StatusDate { get; set; }
+        public Boolean IsOverRidden { get; set; }
+
 
     }
 }

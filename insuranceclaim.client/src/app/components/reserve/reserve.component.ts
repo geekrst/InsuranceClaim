@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IReserveModel, IReserveRequestModel } from '../../Models/ReserveModel';
 import { ReserveServiceService } from '../../services/reserve-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reserve',
@@ -10,7 +11,7 @@ import { ReserveServiceService } from '../../services/reserve-service.service';
 })
 export class ReserveComponent {
 
-  constructor(private myService: ReserveServiceService) {
+  constructor(private myService: ReserveServiceService, private routeTo:Router) {
 
     this.myService.getAllReserves().subscribe({
       next: data => this.myReserves = data,
@@ -19,65 +20,56 @@ export class ReserveComponent {
   }
 
   myReserves: IReserveModel[] = [];
-
-  //myReserves: IReserveModel[] = [
-  //   {
-  //     id: 'scjshckjnskc',
-  //     reserveDamage: BigInt(2000),
-  //     reserveClaimantCost: BigInt(2000),
-  //     reserveDefenceCost: BigInt(2000),
-  //     paidDamage: BigInt(0),
-  //     paidClaimantCost: BigInt(0),
-  //     paidDefenceCost: BigInt(0),
-  //     incurredDamage: BigInt(0),
-  //     incurredClaimantCost: BigInt(0),
-  //     incurredDefenceCost: BigInt(0),
-  //     status: 'NEW',
-  //     statusDate: new Date('2020-12-29T10:33:30')
-  //   },
-  //   {
-  //     id: 'khsakcjaslcmalsmc',
-  //     reserveDamage: BigInt(4000),
-  //     reserveClaimantCost: BigInt(4000),
-  //     reserveDefenceCost: BigInt(4000),
-  //     paidDamage: BigInt(0),
-  //     paidClaimantCost: BigInt(0),
-  //     paidDefenceCost: BigInt(0),
-  //     incurredDamage: BigInt(0),
-  //     incurredClaimantCost: BigInt(0),
-  //     incurredDefenceCost: BigInt(0),
-  //     status: 'NEW',
-  //     statusDate: new Date('2020-12-27T10:33:30')
-  //   },
-  //   {
-  //     id: 'kbsajncalkmcla',
-  //     reserveDamage: BigInt(6000),
-  //     reserveClaimantCost: BigInt(6000),
-  //     reserveDefenceCost: BigInt(6000),
-  //     paidDamage: BigInt(0),
-  //     paidClaimantCost: BigInt(0),
-  //     paidDefenceCost: BigInt(0),
-  //     incurredDamage: BigInt(0),
-  //     incurredClaimantCost: BigInt(0),
-  //     incurredDefenceCost: BigInt(0),
-  //     status: 'NEW',
-  //     statusDate: new Date('2020-12-24T10:33:30')
-  //   }
+  isApproveButton: boolean = false;
+  isRejectButton: boolean = false
 
 
-  //];
+  onSendApprovalReserve(reserve: IReserveModel) {
+    reserve.isInApproval = true;
+    reserve.status = "Ready to Approve";
+    reserve.statusDate = new Date();
+    let msg: boolean = false;
+    console.log(reserve);
 
- 
+    this.myService.updateReserve(reserve).subscribe({
+      next: reserve => {
+        console.log(reserve),
+          msg = reserve.isInApproval
+      },
+      error: err => console.log(err)
+    });
 
-  onSendApprovalReserve() {
-    //updateReserveRequest.status = "Sent for Approval";
+    if (!msg) {
+      console.log("Can not approve, since, there is no approved reserve...");
+    }
+  }
+
+  onApprovingReserve(reserve: IReserveModel) {
+
+    reserve.status = "Approved";
+    reserve.statusDate = new Date();
+    this.myService.updateReserve(reserve).subscribe({
+      next: reserve => console.log(reserve),
+      error: err => console.log(err)
+    });
+    this.routeTo.navigate(['/insurance/reserve']);
+
+  }
+  onRejectingReserve(reserve: IReserveModel) {
+
+    reserve.status = "Rejected";
+    reserve.statusDate = new Date();
+    this.myService.updateReserve(reserve).subscribe({
+      next: reserve => console.log(reserve),
+      error: err => console.log(err)
+    });
+    this.routeTo.navigate(['/insurance/reserve']);
 
   }
 
+  
 
-  onRejectReserve() {
 
-  }
   
 
 }

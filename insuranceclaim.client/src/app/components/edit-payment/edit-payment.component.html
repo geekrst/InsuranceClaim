@@ -1,0 +1,49 @@
+
+<div class="container">
+  <form #form="ngForm" (ngSubmit)="updatePayment()">
+    <div class="col">
+
+      <div class="col-md-3 mb-3">
+        <label for="paymentDamage" class="stayLeft">Damage</label>
+        <input type="number" min="0" class="form-control border-primary" id="paymentDamage" placeholder="Enter Damage Cost"
+               [(ngModel)]="updatePaymentRequest.paymentDamage" name="paymentDamage" />
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="paymentClaimantCost" class="stayLeft">Claimant Cost</label>
+        <input type="number" min="0" class="form-control border-primary" id="paymentClaimantCost" placeholder="Enter Claimant Cost"
+               [(ngModel)]="updatePaymentRequest.paymentClaimantCost" name="paymentClaimantCost" />
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="paymentDefenceCost" class="stayLeft">Defence Cost</label>
+        <input type="number" min="0" class="form-control border-primary" id="paymentDefenceCost" placeholder="Enter Defence Cost"
+               [(ngModel)]="updatePaymentRequest.paymentDefenceCost" name="paymentDefenceCost" />
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="paymentType" class="stayLeft">Payment Type</label>
+        <!--<input type="text" class="form-control border-primary" id="paymentType" placeholder="Enter Payment Type"
+           [(ngModel)]="addPaymentRequest.paymentType" name="paymentType" />-->
+        <select class="form-control border-primary" name="paymentType" id="paymentType" placeholder="Enter Payment Type"
+                [(ngModel)]="updatePaymentRequest.paymentType">
+          <option value="" disabled selected>Select Payment Type</option>
+          <option value="Paid">Paid</option>
+          <option value="Recovery">Recovery</option>
+        </select>
+
+      </div>
+
+      <div class="col-md-2">
+        <button type="submit" class="mt-4 btn btn-success textLeft">
+          Update Reserve
+        </button>
+      </div>
+
+    </div>
+  </form>
+
+</div>
+

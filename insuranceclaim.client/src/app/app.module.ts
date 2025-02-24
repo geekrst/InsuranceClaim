@@ -10,6 +10,12 @@ import { PaymentComponent } from './components/payment/payment.component';
 import { AddReserveComponent } from './components/add-reserve/add-reserve.component';
 import { AddPaymentComponent } from './components/add-payment/add-payment.component';
 import { EditReserveComponent } from './components/edit-reserve/edit-reserve.component';
+import { EditPaymentComponent } from './components/edit-payment/edit-payment.component';
+
+import { ApprovalComponent } from './components/approval/approval.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { ApprovedEntityComponent } from './components/approved-entity/approved-entity.component';
+import { FinalReservesComponent } from './components/final-reserves/final-reserves.component';
 //import {  }
 
 @NgModule({
@@ -19,7 +25,12 @@ import { EditReserveComponent } from './components/edit-reserve/edit-reserve.com
     PaymentComponent,
     AddReserveComponent,
     AddPaymentComponent,
-    EditReserveComponent
+    EditReserveComponent,
+    EditPaymentComponent,
+    ApprovalComponent,
+    DashboardComponent,
+    ApprovedEntityComponent,
+    FinalReservesComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,

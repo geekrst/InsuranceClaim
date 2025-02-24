@@ -2,26 +2,38 @@
 
 
 <div class="container">
-  <form #form="ngForm" (ngSubmit)="addPayment()">
+  <form  (ngSubmit)="addPayment()">
     <div class="col">
 
       <div class="col-md-3 mb-3">
         <label for="reserveDamage" class="stayLeft">Damage</label>
-        <input type="text" class="form-control border-primary" id="reserveDamage" placeholder="Enter Damage Cost"
-               [(ngModel)]="addPaymentRequest.paymentDamage" name="reserveDamage" />
+        <input type="number" class="form-control border-primary" id="reserveDamage" placeholder="Enter Damage Cost"
+               [(ngModel)]="addPaymentRequest.paymentDamage" name="reserveDamage" required/>
       </div>
       <div class="col-md-3 mb-3">
 
         <label for="reserveClaimantCost" class="stayLeft">Claimant Cost</label>
-        <input type="text" class="form-control border-primary" id="reserveClaimantCost" placeholder="Enter Claimant Cost"
-               [(ngModel)]="addPaymentRequest.paymentClaimantCost" name="reserveClaimantCost" />
+        <input type="number" class="form-control border-primary" id="reserveClaimantCost" placeholder="Enter Claimant Cost"
+               [(ngModel)]="addPaymentRequest.paymentClaimantCost" name="reserveClaimantCost" required/>
 
       </div>
       <div class="col-md-3 mb-3">
 
         <label for="reserveDefenceCost" class="stayLeft">Defence Cost</label>
-        <input type="text" class="form-control border-primary" id="reserveDefenceCost" placeholder="Enter Defence Cost"
-               [(ngModel)]="addPaymentRequest.paymentDefenceCost" name="reserveDefenceCost" />
+        <input type="number"  class="form-control border-primary" id="reserveDefenceCost" placeholder="Enter Defence Cost"
+               [(ngModel)]="addPaymentRequest.paymentDefenceCost" name="reserveDefenceCost" required/>
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="paymentType" class="stayLeft">Payment Type</label>
+        <!--<input type="text" class="form-control border-primary" id="paymentType" placeholder="Enter Payment Type"
+               [(ngModel)]="addPaymentRequest.paymentType" name="paymentType" />-->
+        <select class="form-control border-primary" name="paymentType" id="paymentType"  placeholder="Enter Payment Type"
+               [(ngModel)]="addPaymentRequest.paymentType" required>
+          <option value="Paid">Paid</option>
+          <option value="Recovery">Recovery</option>
+        </select>
 
       </div>
       <div class="col-md-3">

@@ -20,15 +20,16 @@ export class AddReserveComponent {
     reserveClaimantCost: BigInt(0),
     reserveDefenceCost: BigInt(0),
     status: 'NEW',
-    statusDate: new Date('0000-00-00T00:00:00')
+    statusDate: new Date()
   }
 
   //  00000000-0000-0000-0000-000000000000    -- EMPTY GUID
 
+  checkCorrectBigInt: boolean = false
 
   addReserve() {
     this.addReserveRequest.id = '00000000-0000-0000-0000-000000000000';
-    this.addReserveRequest.status = 'NEW';
+    this.addReserveRequest.status = 'New';
     this.addReserveRequest.statusDate = new Date();
     this.myService.addReserve(this.addReserveRequest).subscribe(
       {

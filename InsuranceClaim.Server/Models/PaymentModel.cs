@@ -7,6 +7,11 @@
         public long PaymentClaimantCost { get; set; }
         public long PaymentDefenceCost { get; set; }
         public string Status { get; set; }
+
+        public Boolean IsInApproval { get; set; }
+
+        public string PaymentType { get; set; }
+
         public DateTime StatusDate { get; set; }
     }
 }

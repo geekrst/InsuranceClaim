@@ -1,0 +1,91 @@
+<div class="col">
+  <div class="container row-md-6">
+    <h1 class="my-5">Approvals for Payment</h1>
+
+    <table class="table table-sm table-bordered ml-3" *ngIf="myPayments.length != 0; else noPayments">
+      <tr>
+        <th>ID</th>
+        <th>Payment damage Cost</th>
+        <th>Payment Claimant Cost</th>
+        <th>Payment Defence Cost</th>
+        <!--<th>Paid damage Cost</th>
+        <th>Paid Claimant Cost</th>
+        <th>Paid Defence Cost</th>
+        <th>Incurred damage</th>
+        <th>Incurred Claimant Cost</th>
+        <th>Incurred Defence Cost</th>-->
+        <th>Payment Type</th>
+        <th>Status</th>
+        <th>Status Update Date</th>
+
+      </tr>
+      <tbody>
+        <tr *ngFor="let payment of myPayments">
+          <td>{{payment.id}}</td>
+          <td>{{payment.paymentDamage}}</td>
+          <td>{{payment.paymentClaimantCost}}</td>
+          <td>{{payment.paymentDefenceCost}}</td>
+          <td>{{payment.paymentType}}</td>
+          <td>{{payment.status}}</td>
+          <td>{{payment.statusDate}}</td>
+
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noPayments>
+      <div> No Payments available for Approval ({{myPayments.length}})... </div>
+    </ng-template>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <div class="container row-md-6">
+    <h1 class="my-5">Approvals for Reserve</h1>
+    <table class="table table-sm table-bordered" *ngIf="myReserves.length != 0; else noReserves">
+      <tr>
+        <th>ID</th>
+        <th>Reserve damage Cost</th>
+        <th>Reserve Claimant Cost</th>
+        <th>Reserve Defence Cost</th>
+        <th>Paid damage Cost</th>
+        <th>Paid Claimant Cost</th>
+        <th>Paid Defence Cost</th>
+        <th>Incurred damage</th>
+        <th>Incurred Claimant Cost</th>
+        <th>Incurred Defence Cost</th>
+        <th>Status</th>
+        <th>Status Update Date</th>
+      </tr>
+      <tbody>
+        <tr *ngFor="let reserve of myReserves">
+          <td>{{reserve.id}}</td>
+          <td>{{reserve.reserveDamage}}</td>
+          <td>{{reserve.reserveClaimantCost}}</td>
+          <td>{{reserve.reserveDefenceCost}}</td>
+          <td>{{reserve.paidDamage}}</td>
+          <td>{{reserve.paidClaimantCost}}</td>
+          <td>{{reserve.paidDefenceCost}}</td>
+          <td>{{reserve.incurredDamage}}</td>
+          <td>{{reserve.incurredClaimantCost}}</td>
+          <td>{{reserve.incurredDefenceCost}}</td>
+          <td>{{reserve.status}}</td>
+          <td>{{reserve.statusDate}}</td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noReserves>
+      <div> No Reserves available for Approval ({{myReserves.length}})... </div>
+    </ng-template>
+  </div>
+
+
+</div>
