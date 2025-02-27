@@ -6,20 +6,20 @@
       <div class="col-md-3 mb-3">
         <label for="reserveDamage" class="stayLeft">Damage</label>
         <input type="number" min="0" class="form-control border-primary" id="reserveDamage" placeholder="Enter Damage Cost"
-               [(ngModel)]="updateReserveRequest.reserveDamage" name="reserveDamage" />
+               [(ngModel)]="updateReserveRequest.reserveDamage" name="reserveDamage"  (keydown)="preventMinusKey($event)" />
       </div>
       <div class="col-md-3 mb-3">
 
         <label for="reserveClaimantCost" class="stayLeft">Claimant Cost</label>
         <input type="number" min="0" class="form-control border-primary" id="reserveClaimantCost" placeholder="Enter Claimant Cost"
-               [(ngModel)]="updateReserveRequest.reserveClaimantCost" name="reserveClaimantCost" />
+               [(ngModel)]="updateReserveRequest.reserveClaimantCost" name="reserveClaimantCost" (keydown)="preventMinusKey($event)"  />
 
       </div>
       <div class="col-md-3 mb-3">
 
         <label for="reserveDefenceCost" class="stayLeft">Defence Cost</label>
         <input type="number" min="0" class="form-control border-primary" id="reserveDefenceCost" placeholder="Enter Defence Cost"
-               [(ngModel)]="updateReserveRequest.reserveDefenceCost" name="reserveDefenceCost" />
+               [(ngModel)]="updateReserveRequest.reserveDefenceCost" name="reserveDefenceCost"  (keydown)="preventMinusKey($event)" />
 
       </div>
       <div class="col-md-2">

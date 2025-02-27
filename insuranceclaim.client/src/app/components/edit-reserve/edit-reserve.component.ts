@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IReserveModel } from '../../Models/ReserveModel';
+import { IReserveRequestModel } from '../../Models/ReserveModel';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReserveServiceService } from '../../services/reserve-service.service';
 
@@ -11,21 +11,11 @@ import { ReserveServiceService } from '../../services/reserve-service.service';
 })
 export class EditReserveComponent {
 
-  updateReserveRequest: IReserveModel = {
-      id: '00000000-0000-0000-0000-000000000000',
-      reserveDamage: 0n,
-      reserveClaimantCost: 0n,
-      reserveDefenceCost: 0n,
-      status: '',
-      statusDate: new Date('0000-00-00T00:00:00'),
-      paidDamage: 0n,
-      paidClaimantCost: 0n,
-      paidDefenceCost: 0n,
-      incurredDamage: 0n,
-      incurredClaimantCost: 0n,
-      incurredDefenceCost: 0n,
-      isInApproval: false,
-      isOverRidden: false
+  updateReserveRequest: IReserveRequestModel = {
+      reserveDamage: 0,
+      reserveClaimantCost: 0,
+      reserveDefenceCost: 0,
+      id: 0
   }
 
   constructor(private myService: ReserveServiceService,
@@ -43,7 +33,11 @@ export class EditReserveComponent {
       }
     })
   }
-
+  preventMinusKey(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === 'e' || event.key === 'E' || event.key === '+') {
+      event.preventDefault(); // Prevent the "-" key from being entered
+    }
+  }
   updateReserve() {
     this.myService.updateReserve(this.updateReserveRequest).subscribe({
       next: reserve => {

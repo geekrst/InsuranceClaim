@@ -1,5 +1,7 @@
 
 <div class="container">
+  <h1 class="my-5">Approved Reserves</h1>
+
   <table class="table table-sm table-bordered">
     <tr>
       <th>ID</th>
@@ -29,13 +31,13 @@
         <td>{{reserve.incurredClaimantCost}}</td>
         <td>{{reserve.incurredDefenceCost}}</td>
         <td>{{reserve.status}}</td>
-        <td>{{reserve.statusDate}}</td>
+        <td>{{formatDate(reserve.statusDate)}}</td>
         <!--<td>
           <button class="btn btn-success mx-2 my-2" [routerLink]="['/insurance/reserve', 'edit', reserve.id]" [hidden]="reserve.isInApproval || reserve.isOverRidden">Edit</button>
           <button class="btn btn-success mx-2 my-2" (click)="onSendApprovalReserve(reserve)" [hidden]="reserve.isInApproval || reserve.isOverRidden">Send For Approval</button>
           <button class="btn btn-success my-2" (click)="onApprovingReserve(reserve)" [disabled]="reserve.status=='Approved' || reserve.status=='Rejected'" [hidden]="!reserve.isInApproval">Approve</button>
           <button class="btn btn-warning" (click)="onRejectingReserve(reserve)" [disabled]="reserve.status=='Approved' || reserve.status=='Rejected'" [hidden]="!reserve.isInApproval">Reject</button>-->
-          <!--<button class="btn btn-danger mx-2 my-2" (click)="onRejectReserve()">Reject</button>-->
+        <!--<button class="btn btn-danger mx-2 my-2" (click)="onRejectReserve()">Reject</button>-->
         <!--</td>-->
       </tr>
     </tbody>
@@ -43,7 +45,7 @@
 </div>
 
 <div class="container row-md-6">
-  <h1 class="my-5">Approvals for Payment</h1>
+  <h1 class="my-5">Approved Payments</h1>
 
   <table class="table table-sm table-bordered ml-3" *ngIf="myPayments.length != 0; else noPayments">
     <tr>
@@ -51,12 +53,6 @@
       <th>Payment damage Cost</th>
       <th>Payment Claimant Cost</th>
       <th>Payment Defence Cost</th>
-      <!--<th>Paid damage Cost</th>
-      <th>Paid Claimant Cost</th>
-      <th>Paid Defence Cost</th>
-      <th>Incurred damage</th>
-      <th>Incurred Claimant Cost</th>
-      <th>Incurred Defence Cost</th>-->
       <th>Payment Type</th>
       <th>Status</th>
       <th>Status Update Date</th>
@@ -70,7 +66,7 @@
         <td>{{payment.paymentDefenceCost}}</td>
         <td>{{payment.paymentType}}</td>
         <td>{{payment.status}}</td>
-        <td>{{payment.statusDate}}</td>
+        <td>{{formatDate(payment.statusDate)}}</td>
 
       </tr>
     </tbody>

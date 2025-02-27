@@ -6,21 +6,21 @@
 
       <div class="col-md-3 mb-3">
         <label for="reserveDamage" class="stayLeft">Damage</label>
-        <input type="number" class="form-control border-primary" id="reserveDamage" placeholder="Enter Damage Cost"
-               [(ngModel)]="addReserveRequest.reserveDamage" name="reserveDamage" />
+        <input type="number" min="1" class="form-control border-primary" id="reserveDamage" placeholder="Enter Damage Cost"
+               [(ngModel)]="addReserveRequest.reserveDamage" name="reserveDamage" (keydown)="preventMinusKey($event)" />
       </div>
       <div class="col-md-3 mb-3">
 
         <label for="reserveClaimantCost" class="stayLeft">Claimant Cost</label>
-        <input type="number"  class="form-control border-primary" id="reserveClaimantCost" placeholder="Enter Claimant Cost"
-               [(ngModel)]="addReserveRequest.reserveClaimantCost" name="reserveClaimantCost" />
+        <input type="number" min="1" class="form-control border-primary" id="reserveClaimantCost" placeholder="Enter Claimant Cost"
+               [(ngModel)]="addReserveRequest.reserveClaimantCost" name="reserveClaimantCost" (keydown)="preventMinusKey($event)" />
 
       </div>
       <div class="col-md-3 mb-3">
 
         <label for="reserveDefenceCost" class="stayLeft">Defence Cost</label>
-        <input type="number" class="form-control border-primary" id="reserveDefenceCost" placeholder="Enter Defence Cost"
-               [(ngModel)]="addReserveRequest.reserveDefenceCost" name="reserveDefenceCost" />
+        <input type="number" min="1" class="form-control border-primary" id="reserveDefenceCost" placeholder="Enter Defence Cost"
+               [(ngModel)]="addReserveRequest.reserveDefenceCost" name="reserveDefenceCost" (keydown)="preventMinusKey($event)" />
 
       </div>
       <div class="col-md-2">
@@ -28,8 +28,13 @@
           Add Reserve
         </button>
       </div>
-      
+
+      <div class="col-md-3 mt-5 " *ngIf="!validReserve">
+        <strong class="redd">Please enter Valid Reserve Amounts, can't be less than 1 . . .</strong>
+      </div>
     </div>
+      
+    
   </form>
   
 </div>

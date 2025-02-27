@@ -15,35 +15,39 @@ export class AddReserveComponent {
   constructor(private myService: ReserveServiceService, private routTo: Router) { }
 
   addReserveRequest: IReserveRequestModel = {
-    id: '00000000-0000-0000-0000-000000000000',
-    reserveDamage: BigInt(0),
-    reserveClaimantCost: BigInt(0),
-    reserveDefenceCost: BigInt(0),
-    status: 'NEW',
-    statusDate: new Date()
+      reserveDamage: 0,
+      reserveClaimantCost: 0,
+      reserveDefenceCost: 0,
+      id: 0
   }
-
-  //  00000000-0000-0000-0000-000000000000    -- EMPTY GUID
-
-  checkCorrectBigInt: boolean = false
+  preventMinusKey(event: KeyboardEvent): void {
+    if (event.key === '-' || event.key === 'e' || event.key === 'E' || event.key === '+') {
+      event.preventDefault(); // Prevent the "-" key from being entered
+    }
+  }
+  validReserve: boolean = true;
 
   addReserve() {
-    this.addReserveRequest.id = '00000000-0000-0000-0000-000000000000';
-    this.addReserveRequest.status = 'New';
-    this.addReserveRequest.statusDate = new Date();
-    this.myService.addReserve(this.addReserveRequest).subscribe(
-      {
-        next: (reserve) => {
-          console.log(reserve);
-          this.addReserveRequest = reserve;
-          this.routTo.navigate(['insurance/reserve']);
-        },
-        error: (response) => {
-          console.log(response);
+
+    this.validReserve = (this.addReserveRequest.reserveDamage > 0 || this.addReserveRequest.reserveClaimantCost > 0 || this.addReserveRequest.reserveDefenceCost > 0);
+
+    if (this.validReserve) {
+
+      this.myService.addReserve(this.addReserveRequest).subscribe(
+        {
+          next: (reserve) => {
+            console.log(reserve);
+            this.addReserveRequest = reserve;
+            this.routTo.navigate(['insurance/reserve']);
+          },
+          error: (response) => {
+            console.log(response);
+          }
         }
-      }
-    )
-  }
+      )
+    }
+   }
+
 
 
 }

@@ -27,9 +27,7 @@ export class PaymentServiceService {
   }
 
   addPayment(addPaymentRequest: IPaymentRequestModel): Observable<IPaymentModel> {
-    addPaymentRequest.id = '00000000-0000-0000-0000-000000000000';
-    addPaymentRequest.status = 'NEW';
-    addPaymentRequest.statusDate = new Date();
+ 
     return this.http.post<IPaymentModel>(this.baseApiUrl + '/Payment/add', addPaymentRequest)
   }
 
@@ -37,7 +35,7 @@ export class PaymentServiceService {
     return this.http.get<IPaymentModel>(this.baseApiUrl + '/Payment/' + id)
   }
 
-  updatePayment(updatePaymentRequest: IPaymentModel): Observable<IPaymentModel> {
+  updatePayment(updatePaymentRequest: IPaymentRequestModel): Observable<IPaymentModel> {
     return this.http.put<IPaymentModel>(this.baseApiUrl + '/Payment/edit/' + updatePaymentRequest.id, updatePaymentRequest);
   }
 

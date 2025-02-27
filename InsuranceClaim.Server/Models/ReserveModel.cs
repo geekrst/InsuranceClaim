@@ -2,22 +2,33 @@
 {
     public class ReserveModel
     {
-        public Guid Id { get; set; }
-        public long ReserveDamage { get; set; }
-        public long ReserveClaimantCost { get; set; }
-        public long ReserveDefenceCost { get; set; }
-        public long PaidDamage { get; set; }
-        public long PaidClaimantCost { get; set; }
-        public long PaidDefenceCost { get; set; }
-        public long IncurredDamage { get; set; }
-        public long IncurredClaimantCost { get; set; }
-        public long IncurredDefenceCost { get; set; }
+        public int Id { get; set; }
+        public double ReserveDamage { get; set; }
+        public double ReserveClaimantCost { get; set; }
+        public double ReserveDefenceCost { get; set; }
+        public double PaidDamage { get; set; }
+        public double PaidClaimantCost { get; set; }
+        public double PaidDefenceCost { get; set; }
+        public double IncurredDamage { get; set; }
+        public double IncurredClaimantCost { get; set; }
+        public double IncurredDefenceCost { get; set; }
 
         public Boolean IsInApproval { get; set; }
         public string Status { get; set; }
         public DateTime StatusDate { get; set; }
         public Boolean IsOverRidden { get; set; }
 
+        //public ReserveModel() { }
 
     }
+
+    public class AddReserveRequest
+    {
+        public int Id { get; set; }
+        public double ReserveDamage { get; set; }
+        public double ReserveClaimantCost { get; set; }
+        public double ReserveDefenceCost { get; set; }
+
+    }
+
 }

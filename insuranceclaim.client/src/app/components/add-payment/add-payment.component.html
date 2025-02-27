@@ -2,42 +2,68 @@
 
 
 <div class="container">
+
+  <table class="table table-sm table-bordered">
+    <thead>
+      <tr>
+        <td>Reserve Damage</td>
+        <td>Reserve Claimant Cost</td>
+        <td>Reserve Defence Cost</td>
+        <td>Paid Damage</td>
+        <td>Paid Claimant Cost</td>
+        <td>Paid Defence Cost</td>
+
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{latestReserve.reserveDamage}}</td>
+        <td>{{latestReserve.reserveClaimantCost}}</td>
+        <td>{{latestReserve.reserveDefenceCost}}</td>
+        <td>{{latestReserve.paidDamage}}</td>
+        <td>{{latestReserve.paidClaimantCost}}</td>
+        <td>{{latestReserve.paidDefenceCost}}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
   <form  (ngSubmit)="addPayment()">
     <div class="col">
 
       <div class="col-md-3 mb-3">
         <label for="reserveDamage" class="stayLeft">Damage</label>
         <input type="number" class="form-control border-primary" id="reserveDamage" placeholder="Enter Damage Cost"
-               [(ngModel)]="addPaymentRequest.paymentDamage" name="reserveDamage" required/>
+               [(ngModel)]="addPaymentRequest.paymentDamage" name="reserveDamage" (keydown)="preventMinusKey($event)" required />
       </div>
       <div class="col-md-3 mb-3">
 
         <label for="reserveClaimantCost" class="stayLeft">Claimant Cost</label>
         <input type="number" class="form-control border-primary" id="reserveClaimantCost" placeholder="Enter Claimant Cost"
-               [(ngModel)]="addPaymentRequest.paymentClaimantCost" name="reserveClaimantCost" required/>
+               [(ngModel)]="addPaymentRequest.paymentClaimantCost" name="reserveClaimantCost" (keydown)="preventMinusKey($event)" required />
 
       </div>
       <div class="col-md-3 mb-3">
 
         <label for="reserveDefenceCost" class="stayLeft">Defence Cost</label>
-        <input type="number"  class="form-control border-primary" id="reserveDefenceCost" placeholder="Enter Defence Cost"
-               [(ngModel)]="addPaymentRequest.paymentDefenceCost" name="reserveDefenceCost" required/>
+        <input type="number" class="form-control border-primary" id="reserveDefenceCost" placeholder="Enter Defence Cost"
+               [(ngModel)]="addPaymentRequest.paymentDefenceCost" name="reserveDefenceCost" (keydown)="preventMinusKey($event)" required />
 
       </div>
       <div class="col-md-3 mb-3">
 
         <label for="paymentType" class="stayLeft">Payment Type</label>
         <!--<input type="text" class="form-control border-primary" id="paymentType" placeholder="Enter Payment Type"
-               [(ngModel)]="addPaymentRequest.paymentType" name="paymentType" />-->
-        <select class="form-control border-primary" name="paymentType" id="paymentType"  placeholder="Enter Payment Type"
-               [(ngModel)]="addPaymentRequest.paymentType" required>
+           [(ngModel)]="addPaymentRequest.paymentType" name="paymentType" />-->
+        <select class="form-control border-primary" name="paymentType" id="paymentType" placeholder="Enter Payment Type"
+                [(ngModel)]="addPaymentRequest.paymentType" required>
           <option value="Paid">Paid</option>
           <option value="Recovery">Recovery</option>
         </select>
 
       </div>
       <div class="col-md-3">
-        <button type="submit" class="mt-4 btn btn-primary textLeft">
+        <button type="submit" class="mt-4 btn btn-primary textLeft" >
           Add Payment
         </button>
       </div>
@@ -46,6 +72,9 @@
         <strong>No reserves found to associate the payment.</strong>
       </div>
 
+      <div class="col-md-3 mt-5 " *ngIf="!validPaymentAmount">
+        <strong class="redd">Please enter Valid Payment Type OR Payment Amounts less than, as of the Reserve Amount.</strong>
+      </div>
     </div>
   </form>
 

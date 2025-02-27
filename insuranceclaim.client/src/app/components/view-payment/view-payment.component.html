@@ -1,0 +1,62 @@
+
+<div class="container">
+  <form #form="ngForm">
+    <div class="col">
+
+      <div class="col-md-3 mb-3">
+        <label for="paymentDamage" class="stayLeft">Damage</label>
+        <input type="number" min="0" class="form-control border-primary" id="paymentDamage" 
+               [(ngModel)]="myPayment.paymentDamage" name="paymentDamage" disabled />
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="paymentClaimantCost" class="stayLeft">Claimant Cost</label>
+        <input type="number" min="0" class="form-control border-primary" id="paymentClaimantCost" 
+               [(ngModel)]="myPayment.paymentClaimantCost" name="paymentClaimantCost" disabled />
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="paymentDefence" class="stayLeft">Defence Cost</label>
+        <input type="number" min="0" class="form-control border-primary" id="paymentDefence" 
+               [(ngModel)]="myPayment.paymentDefenceCost" name="paymentDefence" disabled />
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="paymentType" class="stayLeft">Payment Type</label>
+        <!--<input type="text" class="form-control border-primary" id="paymentType" placeholder="Enter Payment Type"
+    [(ngModel)]="addPaymentRequest.paymentType" name="paymentType" />-->
+        <select class="form-control border-primary" name="paymentType" id="paymentType"
+                [(ngModel)]="myPayment.paymentType" disabled>
+          <option value="" disabled selected>Select Payment Type</option>
+          <option value="Paid">Paid</option>
+          <option value="Recovery">Recovery</option>
+        </select>
+
+      </div>
+
+      <div class="col-md-3 mb-3">
+
+        <label for="paymentStatus" class="stayLeft">Payment Status</label>
+        <input type="text"  class="form-control border-primary" id="paymentStatus" 
+               [(ngModel)]="myPayment.status" name="paymentStatus" disabled />
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="paymentDefenceCost" class="stayLeft">Payment Status Date</label>
+        <input type="text" class="form-control border-primary" id="paymentDefenceCost" 
+               [(ngModel)]="myPayment.statusDate" name="paymentDefenceCost" disabled />
+
+      </div>
+      <div class="col-md-3 my-5">
+        <a class="nav-link"
+           [routerLink]="['/insurance/payment']"
+           routerLinkActive="clicked homeLink">Go back to Payments</a>
+      </div>
+    </div>
+  </form>
+
+</div>
+

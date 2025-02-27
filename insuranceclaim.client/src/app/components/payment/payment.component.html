@@ -30,12 +30,13 @@
         <td>{{payment.paymentDefenceCost}}</td>
         <td>{{payment.paymentType}}</td>
         <td>{{payment.status}}</td>
-        <td>{{payment.statusDate}}</td>
+        <td>{{formatDate(payment.statusDate)}}</td>
         <td>
-          <button class="btn btn-success mx-2 my-2" [routerLink]="['/insurance/payment','edit',payment.id]" [hidden]="payment.isInApproval">Edit</button>
-          <button class="btn btn-success mx-2 my-2" (click)="onSendApprovalPayment(payment)" [hidden]="payment.isInApproval">Send For Approval</button>
-          <button class="btn btn-success my-2" (click)="onApprovingPayment(payment)" [disabled]="payment.status=='Approved' || payment.status=='Rejected'" [hidden]="!payment.isInApproval">Approve</button>
-          <button class="btn btn-warning" (click)="onRejectingPayment(payment)" [disabled]="payment.status=='Approved' || payment.status=='Rejected'" [hidden]="!payment.isInApproval">Reject</button>
+          <button class="btn btn-success my-2 mx-2" [routerLink]="['/insurance/payment','view',payment.id]">View</button>
+          <!--<button class="btn btn-success my-2 mx-2" [routerLink]="['/insurance/payment','edit',payment.id]" [hidden]="payment.isInApproval">Edit</button>-->
+          <button class="btn btn-success my-2 mx-2" (click)="onSendApprovalPayment(payment)" [hidden]="payment.isInApproval">Send For Approval</button>
+          <!--<button class="btn btn-success my-2" (click)="onApprovingPayment(payment)" [disabled]="payment.status=='Approved' || payment.status=='Rejected'" [hidden]="!payment.isInApproval">Approve</button>
+  <button class="btn btn-warning" (click)="onRejectingPayment(payment)" [disabled]="payment.status=='Approved' || payment.status=='Rejected'" [hidden]="!payment.isInApproval">Reject</button>-->
         </td>
       </tr>
     </tbody>

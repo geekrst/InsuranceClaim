@@ -11,11 +11,14 @@ import { ApprovalComponent } from './components/approval/approval.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ApprovedEntityComponent } from './components/approved-entity/approved-entity.component';
 import { FinalReservesComponent } from './components/final-reserves/final-reserves.component';
+import { ViewReserveComponent } from './components/view-reserve/view-reserve.component';
+import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
 
 const routes: Routes = [
 
+
   {
-    path: 'insurance',
+    path: '',
     component: DashboardComponent
   },
   {
@@ -43,8 +46,16 @@ const routes: Routes = [
     component: EditPaymentComponent
   },
   {
+    path: 'insurance/reserve/view/:id',
+    component: ViewReserveComponent
+  },
+  {
+    path: 'insurance/payment/view/:id',
+    component: ViewPaymentComponent
+  },
+  {
     path: 'insurance/approvals',
-    component: ApprovedEntityComponent
+    component: ApprovalComponent
   },
   {
     path: 'insurance/finalReserves',

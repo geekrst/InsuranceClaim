@@ -1,7 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -16,6 +16,8 @@ import { ApprovalComponent } from './components/approval/approval.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ApprovedEntityComponent } from './components/approved-entity/approved-entity.component';
 import { FinalReservesComponent } from './components/final-reserves/final-reserves.component';
+import { ViewReserveComponent } from './components/view-reserve/view-reserve.component';
+import { ViewPaymentComponent } from './components/view-payment/view-payment.component';
 //import {  }
 
 @NgModule({
@@ -30,13 +32,15 @@ import { FinalReservesComponent } from './components/final-reserves/final-reserv
     ApprovalComponent,
     DashboardComponent,
     ApprovedEntityComponent,
-    FinalReservesComponent
+    FinalReservesComponent,
+    ViewReserveComponent,
+    ViewPaymentComponent
   ],
   imports: [
     BrowserModule, HttpClientModule,
     AppRoutingModule, CommonModule, FormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

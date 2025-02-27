@@ -1,0 +1,50 @@
+
+<div class="container">
+  <form #form="ngForm" >
+    <div class="col">
+
+      <div class="col-md-3 mb-3">
+        <label for="reserveDamage" class="stayLeft">Damage</label>
+        <input type="number" min="0" class="form-control border-primary" id="reserveDamage"
+               [(ngModel)]="myReserve.reserveDamage" name="reserveDamage" disabled />
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="reserveClaimantCost" class="stayLeft">Claimant Cost</label>
+        <input type="number" min="0" class="form-control border-primary" id="reserveClaimantCost" 
+               [(ngModel)]="myReserve.reserveClaimantCost" name="reserveClaimantCost" disabled />
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="reserveDefenceCost" class="stayLeft">Defence Cost</label>
+        <input type="number" min="0" class="form-control border-primary" id="reserveDefenceCost" 
+               [(ngModel)]="myReserve.reserveDefenceCost" name="reserveDefenceCost" disabled />
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="reserveStatus" class="stayLeft">Reserve Status</label>
+        <input type="text" class="form-control border-primary" id="reserveStatus" 
+               [(ngModel)]="myReserve.status" name="reserveStatus" disabled />
+
+      </div>
+      <div class="col-md-3 mb-3">
+
+        <label for="reserveStatusdate" class="stayLeft">Reserve Status date</label>
+        <input type="text"  class="form-control border-primary" id="reserveStatusdate" 
+               [(ngModel)]="myReserve.statusDate" name="reserveStatusdate" disabled />
+
+      </div>
+      <div class="col-md-3 my-5">
+        <a class="nav-link"
+           [routerLink]="['/insurance/reserve']"
+           routerLinkActive="clicked homeLink">Go back to Reserves</a>
+      </div>
+
+
+    </div>
+  </form>
+
+</div>
+

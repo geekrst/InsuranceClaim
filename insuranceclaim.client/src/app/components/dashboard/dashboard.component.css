@@ -1,5 +1,11 @@
 .dash {
   width: 100%;
-  height: 400px;
-  object-fit: contain
+  height: 800px;
+  object-fit: fill;
+}
+
+.insuranceImg{
+/*    width: 90%*/
+/*border: 1px solid red;*/
+height: 800px
 }

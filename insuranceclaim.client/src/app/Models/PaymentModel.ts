@@ -1,19 +1,17 @@
 export interface IPaymentRequestModel {
-  id: string,
-  paymentDamage: bigint,
-  paymentClaimantCost: bigint,
-  paymentDefenceCost: bigint,
-  status: string,
-  statusDate: Date,
+  id: number,
+  paymentDamage: number,
+  paymentClaimantCost: number,
+  paymentDefenceCost: number,
   paymentType: string
 }
 
 
 export interface IPaymentModel {
-  id: string,
-  paymentDamage: bigint,
-  paymentClaimantCost: bigint,
-  paymentDefenceCost: bigint,
+  id: number,
+  paymentDamage: number,
+  paymentClaimantCost: number,
+  paymentDefenceCost: number,
   isInApproval: boolean,
   status: string,
   statusDate: Date,

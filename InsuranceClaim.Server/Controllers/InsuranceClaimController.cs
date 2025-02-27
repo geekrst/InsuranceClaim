@@ -1,10 +1,8 @@
-﻿using System.Text.RegularExpressions;
-using InsuranceClaim.Server.Data;
+﻿using InsuranceClaim.Server.Data;
 using InsuranceClaim.Server.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace InsuranceClaim.Server.Controllers
 {
@@ -24,7 +22,7 @@ namespace InsuranceClaim.Server.Controllers
         [HttpGet("Reserves")]
         public async Task<IActionResult> GetAllReserves()
         {
-            var reserves = await _insuranceClaimDBContext.ReserveModel.OrderBy(r=>r.StatusDate).ToListAsync();
+            var reserves = await _insuranceClaimDBContext.ReserveModel.OrderBy(r => r.StatusDate).ToListAsync();
             return Ok(reserves);
         }
 
@@ -42,8 +40,8 @@ namespace InsuranceClaim.Server.Controllers
             return Ok(filteredReserves);
         }
 
-        [HttpGet("Reserve/{id:Guid}")]
-        public async Task<IActionResult> GetReserve([FromRoute] Guid id)
+        [HttpGet("Reserve/{id:int}")]
+        public async Task<IActionResult> GetReserve([FromRoute] int id)
         {
             var reserve = await _insuranceClaimDBContext.ReserveModel.FirstOrDefaultAsync(r => r.Id == id);
             if (reserve == null)
@@ -53,8 +51,18 @@ namespace InsuranceClaim.Server.Controllers
             return Ok(reserve);
         }
 
+        [HttpGet("LatestReserve")]
+        public async Task<IActionResult> GetLatestReserve()
+        {
+            var reserve = await _insuranceClaimDBContext.ReserveModel.Where(r=>r.Status=="Approved").OrderByDescending(r=>r.StatusDate).FirstOrDefaultAsync();
+            if (reserve == null)
+            {
+                return NotFound();
+            }
+            return Ok(reserve);
+        }
         [HttpPost("Reserve/add")]
-        public async Task<IActionResult> AddReserve([FromBody] ReserveModel reserveModelrequest)
+        public async Task<IActionResult> AddReserve([FromBody] AddReserveRequest reserveModelrequest)
         {
 
             var previousNewReserves = await _insuranceClaimDBContext.ReserveModel.Where(r => r.Status == "New").ToListAsync();
@@ -71,14 +79,22 @@ namespace InsuranceClaim.Server.Controllers
 
             }
 
-            reserveModelrequest.Id=Guid.NewGuid();
-            await _insuranceClaimDBContext.ReserveModel.AddAsync(reserveModelrequest);
+            ReserveModel reserveToAdd = new ()
+            {
+                ReserveDamage = reserveModelrequest.ReserveDamage,
+                ReserveClaimantCost = reserveModelrequest.ReserveClaimantCost,
+                ReserveDefenceCost = reserveModelrequest.ReserveDefenceCost,
+                Status = "New",
+                StatusDate = DateTime.Now
+            };
+
+            await _insuranceClaimDBContext.ReserveModel.AddAsync(reserveToAdd);
             await _insuranceClaimDBContext.SaveChangesAsync();
             return Ok(reserveModelrequest);
         }
 
-        [HttpPut("Reserve/edit/{id:Guid}")]
-        public async Task<IActionResult> updateReserve([FromRoute] Guid id, ReserveModel updateReserveModelRequest)
+        [HttpPut("Reserve/edit/{id:int}")]
+        public async Task<IActionResult> UpdateReserve([FromRoute] int id, ReserveModel updateReserveModelRequest)
         {
             var reserve = await _insuranceClaimDBContext.ReserveModel.FindAsync(id);
             if (reserve == null)
@@ -90,11 +106,28 @@ namespace InsuranceClaim.Server.Controllers
             reserve.ReserveClaimantCost = updateReserveModelRequest.ReserveClaimantCost;
             reserve.ReserveDefenceCost = updateReserveModelRequest.ReserveDefenceCost;
             reserve.Status = updateReserveModelRequest.Status;
-            reserve.StatusDate = updateReserveModelRequest.StatusDate;
-            if(reserve.Status== "Ready to Approve")
+            reserve.StatusDate = DateTime.Now;
+
+
+            await _insuranceClaimDBContext.SaveChangesAsync();
+            return Ok(reserve);
+        }
+
+        [HttpPut("Reserve/readyToApprove/{id:int}")]
+        public async Task<IActionResult> UpdateReserveReadyToApprove([FromRoute] int id, ReserveModel updateReserveModelRequest)
+        {
+            var reserve = await _insuranceClaimDBContext.ReserveModel.FindAsync(id);
+            if (reserve == null)
             {
-                reserve.IsInApproval = true;
+                return NotFound();
             }
+            reserve.ReserveDamage = updateReserveModelRequest.ReserveDamage;
+            reserve.ReserveClaimantCost = updateReserveModelRequest.ReserveClaimantCost;
+            reserve.ReserveDefenceCost = updateReserveModelRequest.ReserveDefenceCost;
+            reserve.Status = "Ready to Approve";
+            reserve.IsInApproval = true;
+            reserve.StatusDate = DateTime.Now;
+            
 
             await _insuranceClaimDBContext.SaveChangesAsync();
             return Ok(reserve);
@@ -103,7 +136,7 @@ namespace InsuranceClaim.Server.Controllers
         [HttpGet("Payments")]
         public async Task<IActionResult> GetAllPayments()
         {
-            var payments =  await _insuranceClaimDBContext.PaymentModel.OrderBy(p => p.StatusDate).ToListAsync();
+            var payments = await _insuranceClaimDBContext.PaymentModel.OrderBy(p => p.StatusDate).ToListAsync();
             return Ok(payments);
         }
 
@@ -117,12 +150,12 @@ namespace InsuranceClaim.Server.Controllers
         [HttpGet("Payments/Approved")]
         public async Task<IActionResult> GetApprovedPayments()
         {
-            var filteredPayments = await _insuranceClaimDBContext.PaymentModel.Where(p => p.Status == "Approved").OrderBy(p=>p.StatusDate).ToListAsync();
+            var filteredPayments = await _insuranceClaimDBContext.PaymentModel.Where(p => p.Status == "Approved").OrderBy(p => p.StatusDate).ToListAsync();
             return Ok(filteredPayments);
         }
 
-        [HttpGet("Payment/{id:Guid}")]
-        public async Task<IActionResult> GetPayment([FromRoute] Guid id)
+        [HttpGet("Payment/{id:int}")]
+        public async Task<IActionResult> GetPayment([FromRoute] int id)
         {
             var payment = await _insuranceClaimDBContext.PaymentModel.FirstOrDefaultAsync(r => r.Id == id);
             if (payment == null)
@@ -133,40 +166,31 @@ namespace InsuranceClaim.Server.Controllers
         }
 
         [HttpPost("Payment/add")]
-        public async Task<IActionResult> AddPayment([FromBody] PaymentModel paymentModelrequest)
+        public async Task<IActionResult> AddPayment([FromBody] AddPaymentRequest paymentModelrequest)
         {
-            var approvedReserveCount = _insuranceClaimDBContext.ReserveModel.Where(x=> x.Status=="Approved").Count();
-            if (approvedReserveCount > 0) {
-                paymentModelrequest.Id = Guid.NewGuid();
-                await _insuranceClaimDBContext.PaymentModel.AddAsync(paymentModelrequest);
-                await _insuranceClaimDBContext.SaveChangesAsync();
-                return Ok(paymentModelrequest);
-            }
-
-            return BadRequest("No reserves found to associate the payment."); 
-        }
-
-        [HttpPut("Payment/edit/{id:Guid}")]
-        public async Task<IActionResult> updatePayment([FromRoute] Guid id, PaymentModel updatePaymentModelRequest)
-        {
-            var payment = await _insuranceClaimDBContext.PaymentModel.FindAsync(id);
-            if (payment == null)
+            var approvedReserveCount = _insuranceClaimDBContext.ReserveModel.Where(x => x.Status == "Approved").Count();
+            if (approvedReserveCount > 0)
             {
-                return NotFound();
+                PaymentModel paymentToAdd = new() 
+                {
+                    PaymentDamage = paymentModelrequest.PaymentDamage,
+                    PaymentClaimantCost = paymentModelrequest.PaymentClaimantCost,
+                    PaymentDefenceCost = paymentModelrequest.PaymentDefenceCost,
+                    PaymentType= paymentModelrequest.PaymentType,
+                    Status = "New",
+                    StatusDate = DateTime.Now
+                };
+
+                await _insuranceClaimDBContext.PaymentModel.AddAsync(paymentToAdd);
+                await _insuranceClaimDBContext.SaveChangesAsync();
+                return Ok(paymentToAdd);
             }
-            payment.PaymentDamage = updatePaymentModelRequest.PaymentDamage;
-            payment.PaymentClaimantCost = updatePaymentModelRequest.PaymentClaimantCost;
-            payment.PaymentDefenceCost = updatePaymentModelRequest.PaymentDefenceCost;
-            payment.PaymentType= updatePaymentModelRequest.PaymentType;
-            payment.Status = updatePaymentModelRequest.Status;
-            payment.StatusDate = DateTime.UtcNow;
-            
-            await _insuranceClaimDBContext.SaveChangesAsync();
-            return Ok(payment);
+
+            return BadRequest("No reserves found to associate the payment.");
         }
 
-        [HttpPut("Payment/readyToApprove/{id:Guid}")]
-        public async Task<IActionResult> updatePaymentReadyToApprove([FromRoute] Guid id, PaymentModel updatePaymentModelRequest)
+        [HttpPut("Payment/edit/{id:int}")]
+        public async Task<IActionResult> UpdatePayment([FromRoute] int id, PaymentModel updatePaymentModelRequest)
         {
             var payment = await _insuranceClaimDBContext.PaymentModel.FindAsync(id);
             if (payment == null)
@@ -177,51 +201,42 @@ namespace InsuranceClaim.Server.Controllers
             payment.PaymentClaimantCost = updatePaymentModelRequest.PaymentClaimantCost;
             payment.PaymentDefenceCost = updatePaymentModelRequest.PaymentDefenceCost;
             payment.PaymentType = updatePaymentModelRequest.PaymentType;
+            payment.Status = updatePaymentModelRequest.Status;
+            payment.StatusDate = DateTime.Now;
 
+            await _insuranceClaimDBContext.SaveChangesAsync();
+            return Ok(payment);
+        }
+
+        [HttpPut("Payment/readyToApprove/{id:int}")]
+        public async Task<IActionResult> UpdatePaymentReadyToApprove([FromRoute] int id, PaymentModel updatePaymentModelRequest)
+        {
+            var payment = await _insuranceClaimDBContext.PaymentModel.FindAsync(id);
+            if (payment == null)
+            {
+                return NotFound();
+            }
+            //payment.PaymentDamage = updatePaymentModelRequest.PaymentDamage;
+            //payment.PaymentClaimantCost = updatePaymentModelRequest.PaymentClaimantCost;
+            //payment.PaymentDefenceCost = updatePaymentModelRequest.PaymentDefenceCost;
+            //payment.PaymentType = updatePaymentModelRequest.PaymentType;
+
+       
             var countApprovedReserve = _insuranceClaimDBContext.ReserveModel.Where(r => r.Status == "Approved").Count();
 
-            if (updatePaymentModelRequest.IsInApproval && countApprovedReserve > 0)
+            if (countApprovedReserve > 0)
             {
                 payment.Status = "Ready to Approve";
                 payment.IsInApproval = true;
                 payment.StatusDate = updatePaymentModelRequest.StatusDate;
             }
-           
+
             await _insuranceClaimDBContext.SaveChangesAsync();
             return Ok(payment);
         }
 
-        [HttpGet("CalculatedReservesWithPayments")]
-        public async Task<IActionResult> getCalculatedReserves()
-        {
-            var approvedReserves = await _insuranceClaimDBContext.ReserveModel.Where(r => r.Status == "Approved").ToListAsync();
-            var approvedPayments = await _insuranceClaimDBContext.PaymentModel.Where(p => p.Status == "Approved").ToListAsync();
-            //var latestReserve = approvedReserves.OrderByDescending(p => p.StatusDate).FirstOrDefault();
-            approvedReserves.ForEach(ar =>
-            {
-
-                var nextReserve = approvedReserves.Where(x => x.StatusDate > ar.StatusDate).OrderBy(r => r.StatusDate).FirstOrDefault();
-                var eligiblePaymentsForReserve = approvedPayments.Where(ap => ap.StatusDate >= ar.StatusDate && (ap.StatusDate < nextReserve?.StatusDate || nextReserve == null));
-
-                var paidDamage = eligiblePaymentsForReserve.Where(ap => ap.PaymentType == "Recovery").Sum(x => x.PaymentDamage) - eligiblePaymentsForReserve.Where(ap => ap.PaymentType == "Paid").Sum(x => x.PaymentDamage);
-                var paidClaimantCost = eligiblePaymentsForReserve.Where(ap => ap.PaymentType == "Recovery").Sum(x => x.PaymentClaimantCost) - eligiblePaymentsForReserve.Where(ap => ap.PaymentType == "Paid").Sum(x => x.PaymentClaimantCost);
-                var paidDefenceCost = eligiblePaymentsForReserve.Where(ap => ap.PaymentType == "Recovery").Sum(x => x.PaymentDefenceCost) - eligiblePaymentsForReserve.Where(ap => ap.PaymentType == "Paid").Sum(x => x.PaymentDefenceCost);
-
-                ar.PaidDamage = paidDamage;
-                ar.PaidClaimantCost = paidClaimantCost;
-                ar.PaidDefenceCost = paidDefenceCost;
-
-            });
-
-            var orderedApprovedReserves = approvedReserves.OrderBy(r => r.StatusDate);
-
-            return Ok(orderedApprovedReserves);
-        }
-
-
-
-        [HttpPut("Payment/updateWithReserve/{id:Guid}")]
-        public async Task<IActionResult> updatePaymentWithReserve([FromRoute] Guid id, PaymentModel paymentRequestFromUi)
+        [HttpPut("Payment/updateWithReserve/{id:int}")]
+        public async Task<IActionResult> UpdatePaymentWithReserve([FromRoute] int id)
         {
 
             var paymentRequest = await _insuranceClaimDBContext.PaymentModel.FindAsync(id);
@@ -230,7 +245,7 @@ namespace InsuranceClaim.Server.Controllers
                 return NotFound();
             }
 
-            var latestReserve =  _insuranceClaimDBContext.ReserveModel.Where(r => r.Status == "Approved").OrderByDescending(p => p.StatusDate).FirstOrDefault();
+            var latestReserve = _insuranceClaimDBContext.ReserveModel.Where(r => r.Status == "Approved").OrderByDescending(p => p.StatusDate).FirstOrDefault();
 
             if (latestReserve == null)
             {
@@ -242,12 +257,27 @@ namespace InsuranceClaim.Server.Controllers
                 latestReserve.PaidDamage += paymentRequest.PaymentDamage;
                 latestReserve.PaidClaimantCost += paymentRequest.PaymentClaimantCost;
                 latestReserve.PaidDefenceCost += paymentRequest.PaymentDefenceCost;
-            }else if (paymentRequest.PaymentType == "Recovery")
+
+                latestReserve.ReserveDamage -= paymentRequest.PaymentDamage;
+                latestReserve.ReserveClaimantCost -= paymentRequest.PaymentClaimantCost;
+                latestReserve.ReserveDefenceCost -= paymentRequest.PaymentDefenceCost;
+
+              
+            }
+            else if (paymentRequest.PaymentType == "Recovery")
             {
                 latestReserve.PaidDamage -= paymentRequest.PaymentDamage;
                 latestReserve.PaidClaimantCost -= paymentRequest.PaymentClaimantCost;
                 latestReserve.PaidDefenceCost -= paymentRequest.PaymentDefenceCost;
+
+                latestReserve.ReserveDamage += paymentRequest.PaymentDamage;
+                latestReserve.ReserveClaimantCost += paymentRequest.PaymentClaimantCost;
+                latestReserve.ReserveDefenceCost += paymentRequest.PaymentDefenceCost;
             }
+
+            latestReserve.IncurredDamage = latestReserve.ReserveDamage + latestReserve.PaidDamage;
+            latestReserve.IncurredClaimantCost = latestReserve.ReserveClaimantCost + latestReserve.PaidClaimantCost;
+            latestReserve.IncurredDefenceCost = latestReserve.ReserveDefenceCost + latestReserve.PaidDefenceCost;
 
             await _insuranceClaimDBContext.SaveChangesAsync();
             return Ok(latestReserve);

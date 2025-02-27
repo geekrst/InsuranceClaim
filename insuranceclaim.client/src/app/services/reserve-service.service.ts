@@ -36,7 +36,14 @@ export class ReserveServiceService {
     return this.http.get<IReserveModel>(this.baseApiUrl+'/Reserve/' + id)
   }
 
-  updateReserve(updateReserveRequest: IReserveModel): Observable<IReserveModel> {
+  getLatestReserve(): Observable<IReserveModel> {
+    return this.http.get<IReserveModel>(this.baseApiUrl + '/LatestReserve/')
+  }
+
+  updateReserve(updateReserveRequest: IReserveRequestModel): Observable<IReserveModel> {
     return this.http.put<IReserveModel>(this.baseApiUrl + '/Reserve/edit/' + updateReserveRequest.id, updateReserveRequest);
+  }
+  updatereserveReadyToApprove(updateReserveRequest: IReserveModel): Observable<IReserveModel> {
+    return this.http.put<IReserveModel>(this.baseApiUrl + '/reserve/readyToApprove/' + updateReserveRequest.id, updateReserveRequest);
   }
 }

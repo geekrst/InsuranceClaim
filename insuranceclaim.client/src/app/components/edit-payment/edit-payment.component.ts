@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IPaymentModel } from '../../Models/PaymentModel';
+import { IPaymentModel, IPaymentRequestModel } from '../../Models/PaymentModel';
 import { PaymentServiceService } from '../../services/payment-service.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -13,15 +13,12 @@ export class EditPaymentComponent {
 
  
 
-  updatePaymentRequest: IPaymentModel = {
-      id: '00000000-0000-0000-0000-000000000000',
-      paymentDamage: 0n,
-      paymentClaimantCost: 0n,
-      paymentDefenceCost: 0n,
-      status: '',
-      statusDate: new Date('0000-00-00T00:00:00'),
-    isInApproval: false,
-      paymentType: ''
+  updatePaymentRequest: IPaymentRequestModel = {
+      paymentDamage: 0,
+      paymentClaimantCost: 0,
+      paymentDefenceCost: 0,
+      paymentType: '',
+      id: 0
   }
 
   constructor(private myService: PaymentServiceService,

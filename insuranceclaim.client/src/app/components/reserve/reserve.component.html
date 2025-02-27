@@ -29,12 +29,13 @@
         <td>{{reserve.reserveClaimantCost}}</td>
         <td>{{reserve.reserveDefenceCost}}</td>
         <td>{{reserve.status}}</td>
-        <td>{{reserve.statusDate}}</td>
+        <td>{{formatDate(reserve.statusDate)}}</td>
         <td>
-          <button class="btn btn-success mx-2 my-2" [routerLink]="['/insurance/reserve', 'edit', reserve.id]" [hidden]="reserve.isInApproval || reserve.isOverRidden">Edit</button>
-          <button class="btn btn-success mx-2 my-2" (click)="onSendApprovalReserve(reserve)" [hidden]="reserve.isInApproval || reserve.isOverRidden">Send For Approval</button>
-          <button class="btn btn-success my-2" (click)="onApprovingReserve(reserve)" [disabled]="reserve.status=='Approved' || reserve.status=='Rejected'" [hidden]="!reserve.isInApproval">Approve</button>
-          <button class="btn btn-warning" (click)="onRejectingReserve(reserve)" [disabled]="reserve.status=='Approved' || reserve.status=='Rejected'" [hidden]="!reserve.isInApproval">Reject</button>
+          <button class="btn btn-success  mx-2 my-2" [routerLink]="['/insurance/reserve','view',reserve.id]" >View</button>
+          <button class="btn btn-success  mx-2 my-2" [routerLink]="['/insurance/reserve', 'edit', reserve.id]" [hidden]="reserve.isInApproval || reserve.isOverRidden">Edit</button>
+          <button class="btn btn-success  mx-2 my-2" (click)="onSendApprovalReserve(reserve)" [hidden]="reserve.isInApproval || reserve.isOverRidden">Send For Approval</button>
+          <!--<button class="btn btn-success my-2" (click)="onApprovingReserve(reserve)" [disabled]="reserve.status=='Approved' || reserve.status=='Rejected'" [hidden]="!reserve.isInApproval">Approve</button>
+  <button class="btn btn-warning" (click)="onRejectingReserve(reserve)" [disabled]="reserve.status=='Approved' || reserve.status=='Rejected'" [hidden]="!reserve.isInApproval">Reject</button>-->
           <!--<button class="btn btn-danger mx-2 my-2" (click)="onRejectReserve()">Reject</button>-->
         </td>
       </tr>

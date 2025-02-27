@@ -12,11 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InsuranceClaim.Server.Migrations
 {
     [DbContext(typeof(InsuranceClaimDBContext))]
-    [Migration("20250221062406_added IsOverRidden to Reserve Model")]
-    partial class addedIsOverRiddentoReserveModel
+    [Migration("20250224120957_updated datatype of Id")]
+    partial class updateddatatypeofId
     {
         /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected  void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,21 +27,23 @@ namespace InsuranceClaim.Server.Migrations
 
             modelBuilder.Entity("InsuranceClaim.Server.Models.PaymentModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<bool>("IsInApproval")
                         .HasColumnType("bit");
 
-                    b.Property<long>("PaymentClaimantCost")
-                        .HasColumnType("bigint");
+                    b.Property<double>("PaymentClaimantCost")
+                        .HasColumnType("float");
 
-                    b.Property<long>("PaymentDamage")
-                        .HasColumnType("bigint");
+                    b.Property<double>("PaymentDamage")
+                        .HasColumnType("float");
 
-                    b.Property<long>("PaymentDefenceCost")
-                        .HasColumnType("bigint");
+                    b.Property<double>("PaymentDefenceCost")
+                        .HasColumnType("float");
 
                     b.Property<string>("PaymentType")
                         .IsRequired()
@@ -61,18 +63,20 @@ namespace InsuranceClaim.Server.Migrations
 
             modelBuilder.Entity("InsuranceClaim.Server.Models.ReserveModel", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+                        .HasColumnType("int");
 
-                    b.Property<long>("IncurredClaimantCost")
-                        .HasColumnType("bigint");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("IncurredDamage")
-                        .HasColumnType("bigint");
+                    b.Property<double>("IncurredClaimantCost")
+                        .HasColumnType("float");
 
-                    b.Property<long>("IncurredDefenceCost")
-                        .HasColumnType("bigint");
+                    b.Property<double>("IncurredDamage")
+                        .HasColumnType("float");
+
+                    b.Property<double>("IncurredDefenceCost")
+                        .HasColumnType("float");
 
                     b.Property<bool>("IsInApproval")
                         .HasColumnType("bit");
@@ -80,23 +84,23 @@ namespace InsuranceClaim.Server.Migrations
                     b.Property<bool>("IsOverRidden")
                         .HasColumnType("bit");
 
-                    b.Property<long>("PaidClaimantCost")
-                        .HasColumnType("bigint");
+                    b.Property<double>("PaidClaimantCost")
+                        .HasColumnType("float");
 
-                    b.Property<long>("PaidDamage")
-                        .HasColumnType("bigint");
+                    b.Property<double>("PaidDamage")
+                        .HasColumnType("float");
 
-                    b.Property<long>("PaidDefenceCost")
-                        .HasColumnType("bigint");
+                    b.Property<double>("PaidDefenceCost")
+                        .HasColumnType("float");
 
-                    b.Property<long>("ReserveClaimantCost")
-                        .HasColumnType("bigint");
+                    b.Property<double>("ReserveClaimantCost")
+                        .HasColumnType("float");
 
-                    b.Property<long>("ReserveDamage")
-                        .HasColumnType("bigint");
+                    b.Property<double>("ReserveDamage")
+                        .HasColumnType("float");
 
-                    b.Property<long>("ReserveDefenceCost")
-                        .HasColumnType("bigint");
+                    b.Property<double>("ReserveDefenceCost")
+                        .HasColumnType("float");
 
                     b.Property<string>("Status")
                         .IsRequired()
